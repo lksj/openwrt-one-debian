@@ -106,6 +106,8 @@ jobs:
           path: "*.fit"
   build-nand:
     runs-on: ubuntu-latest
+    container:
+      image: debian:trixie-slim
     needs:
       - build-bootloaders
       - build-recovery-image
