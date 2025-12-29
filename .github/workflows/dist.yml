@@ -42,9 +42,9 @@ jobs:
         with:
           name: bootloader
           path: |
-            "*.bin"
-            "*.raw"
-            "*.fip"
+            *.bin
+            *.raw
+            *.fip
   build-kernel:
     runs-on: ubuntu-latest
     container:
@@ -74,8 +74,20 @@ jobs:
               libssl-dev \
               libssl-dev:arm64
       - run: CONFIG=openwrt-one-kernel-config ./scripts/build-kernel.sh
-      - name: Upload release binaries
+      - name: Upload kernel packages
         uses: actions/upload-artifact@v6
         with:
-          name: debs
+          name: kernel
           path: "*.deb"
+  build-recovery-image:
+    runs-on: ubuntu-latest
+    container:
+      image: go-debos/debos:main
+    steps:
+      - uses: actions/checkout@v6
+      - run: debos --print-recipe recovery/recovery.yaml
+      - name: recovery image
+        uses: actions/upload-artifact@v6
+        with:
+          name: recovery
+          path: "*.fit"

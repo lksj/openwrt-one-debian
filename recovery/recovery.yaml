@@ -1,5 +1,7 @@
 {{ $suite := or .suite "trixie" }}
-{{ $kernel := or .kernel "debian" }}
+# kernel should be "local" or "debian", default to local for now as the debian
+# kernel doesn't work for the one just yet...
+{{ $kernel := or .kernel "local" }}
 
 architecture: arm64
 
