@@ -125,8 +125,6 @@ actions:
     command: |
       mv -v ${ROOTDIR}/boot/vmlinuz* ${ARTIFACTDIR}/Image
       cp -v ${ROOTDIR}/lib/linux-image-*/mediatek/mt7981b-openwrt-one.dtb ${ARTIFACTDIR}
-      rm ${ROOTDIR}/vmlinu*
-      rm ${ROOTDIR}/initrd*
 
   - action: run
     description: Clean up rootfs
