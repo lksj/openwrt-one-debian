@@ -2,6 +2,7 @@
 # kernel should be "local" or "debian", default to local for now as the debian
 # kernel doesn't work for the one just yet...
 {{ $kernel := or .kernel "local" }}
+{{ $cmdline := or .cmdline "fw_devlink=permissive clk_ignore_unused" }}
 
 architecture: arm64
 
@@ -160,6 +161,13 @@ actions:
     chroot: false
     command: |
       gzip -f ${ARTIFACTDIR}/Image
+
+  - action: run
+    description: Set command line for revoery image
+    chroot: false
+    command: |
+      fdtput -t s  ${ARTIFACTDIR}/mt7981b-openwrt-one.dtb \
+      /chosen bootargs "{{ $cmdline }}"
 
   - action: run
     description: Building fit image

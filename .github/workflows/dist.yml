@@ -92,6 +92,9 @@ jobs:
         with:
           name: kernel
       - run: |
+          apt update
+          apt install -y device-tree-compiler
+      - run: |
           mkdir -p recovery/local-kernel
           rm linux-image*dbg*deb
           cp -v linux-image*_*.deb recovery/local-kernel
