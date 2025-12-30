@@ -133,3 +133,25 @@ jobs:
           path: |
             *snand*bin
             *.ubi
+  build-system-image:
+    runs-on: ubuntu-latest
+    needs:
+      - build-kernel
+    container:
+      image: ghcr.io/go-debos/debos:main
+      options: --device=/dev/kvm
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v7
+        with:
+          name: kernel
+      - run: |
+          mkdir -p system/local-kernel
+          rm linux-image*dbg*deb
+          cp -v linux-image*_*.deb system/local-kernel
+      - run: debos --fakemachine-backend=kvm --print-recipe system/system.yaml
+      - name: recovery image
+        uses: actions/upload-artifact@v6
+        with:
+          name: system
+          path: "*.img*"
