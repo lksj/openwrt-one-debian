@@ -82,6 +82,8 @@ actions:
     command: |
       systemctl enable systemd-networkd
       systemctl enable systemd-timesyncd
+      systemctl enable hostapd@wlan0
+      systemctl enable hostapd@wlan1
 
   - action: image-partition
     imagename: {{ $image }}
