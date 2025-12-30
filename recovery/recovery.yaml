@@ -77,6 +77,8 @@ actions:
       - iw
       - firmware-mediatek
       - firmware-misc-nonfree
+      - nvi
+      - curl
 
   - action: apt
     description: Install initramfs tools
