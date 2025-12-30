@@ -38,6 +38,7 @@ actions:
     recommends: true
     packages:
       - hostapd
+      - wireless-regdb
       - iw
       - firmware-mediatek
       - firmware-misc-nonfree
