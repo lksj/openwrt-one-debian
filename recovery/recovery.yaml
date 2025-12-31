@@ -134,6 +134,15 @@ actions:
       systemctl enable systemd-timesyncd
       systemctl enable iwd
 
+  - action: overlay
+    description: Install installer
+    source: overlays/installer
+
+  - action: run
+    description: Ensure installer is executable
+    chroot: true
+    command: chmod a+x /usr/local/bin/installer
+
   - action: run
     description: Move boot artifacts out of rootfs
     chroot: false
