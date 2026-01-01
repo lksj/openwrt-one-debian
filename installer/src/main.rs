@@ -1,10 +1,11 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use clap::Parser;
 use futures::StreamExt;
 use std::{io::stdout, path::PathBuf, time::Duration};
 use tokio::time::{self};
 use tracing::{info, warn};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use zbus_systemd::{systemd1::ManagerProxy, zbus};
 
 use crossterm::{
     ExecutableCommand,
@@ -149,13 +150,13 @@ where
                 .direction(Direction::Vertical)
                 .constraints([
                     Constraint::Length(1),
-                    Constraint::Percentage(75),
-                    Constraint::Percentage(25),
+                    Constraint::Percentage(60),
+                    Constraint::Percentage(40),
                 ])
                 .split(frame.area());
 
             let line = Line::from("Openwrt one flasher -- ^C to exit")
-                .style(Style::default().bg(Color::White).fg(Color::Red))
+                .style(Style::default().bg(Color::Black).fg(Color::Red))
                 .centered();
             frame.render_widget(line, layout[0]);
             frame.render_widget(&self.page, layout[1]);
@@ -196,6 +197,22 @@ async fn main() -> Result<()> {
         warn!("Running in FAKE mode");
     }
 
+    let conn = zbus::Connection::system()
+        .await
+        .context("Failed to connect to system bus")?;
+    let manager = ManagerProxy::new(&conn)
+        .await
+        .context("Failed to connect to manager proxy")?;
+
+    shutup_printk().await;
+    let current_show_status = manager.show_status().await.unwrap_or_else(|e| {
+        warn!("Failed to get systemds ShowStatus: {e:#}");
+        true
+    });
+    if let Err(e) = manager.set_show_status("false".to_string()).await {
+        warn!("Failed to change systemds ShowStatus: {e:#}");
+    }
+
     let (width, height) = crossterm::terminal::size()?;
     if width == 0 || height == 0 {
         // If size is unset, force to 80x24
@@ -210,7 +227,6 @@ async fn main() -> Result<()> {
         )?;
     }
 
-    shutup_printk().await;
     stdout().execute(EnterAlternateScreen)?;
     enable_raw_mode()?;
     let mut terminal = Terminal::new(CrosstermBackend::new(stdout()))?;
@@ -220,5 +236,12 @@ async fn main() -> Result<()> {
 
     stdout().execute(LeaveAlternateScreen)?;
     disable_raw_mode()?;
+
+    if let Err(e) = manager
+        .set_show_status(current_show_status.to_string())
+        .await
+    {
+        warn!("Failed to reset systemds ShowStatus: {e:#}");
+    }
     Ok(())
 }
