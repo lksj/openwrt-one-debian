@@ -2,14 +2,13 @@
 Description=Installer on %I
 BindsTo=dev-%i.device
 After=dev-%i.device
-Conflicts=serial-getty@%i.service
 Before=serial-getty@%i.service
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/local/bin/installer
-StandardInput=tty
+StandardInput=tty-force
 StandardOutput=tty
 StandardError=tty
 TTYPath=/dev/%I
