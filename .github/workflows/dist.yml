@@ -192,6 +192,12 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v7
+        with:
+          name: system
+      - uses: actions/download-artifact@v7
+        with:
+          name: nand
       - run: find
       - run: |
           gh release delete latest --yes || true
