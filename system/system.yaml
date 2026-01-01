@@ -60,6 +60,12 @@ actions:
       apt -y --no-install-recommends install /kernel/*.deb
       rm -rf /kernel
 
+  - action: run
+    description: Switch to upstream wireless regulatory db
+    chroot: true
+    command: |
+      update-alternatives --set regulatory.db /lib/firmware/regulatory.db-upstream
+
 {{ else if eq $kernel  "debian" }}
   - action: apt
     description: Install kernel
