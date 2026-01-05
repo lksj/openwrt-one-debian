@@ -20,7 +20,7 @@ Requirements:
 * USB stick for installation
 
 All artifacts for installation steps can be downloaded from the `latest build`_
-(`openwrt*`) and should be placed on a USB stick (single FAT or FAT32 partition).
+(``openwrt*``) and should be placed on a USB stick (single FAT or FAT32 partition).
 
 .. _OpenWrt One: https://openwrt.org/toh/openwrt/one
 .. _latest build: https://github.com/sjoerdsimons/openwrt-one-debian/releases/tag/latest
@@ -29,9 +29,9 @@ Installation:
 =============
 
 The installation comes in two parts; First the NAND flash content is replaced
-with a `u-boot` capable of directly booting from NVMe as well as `recovery`
+with an ``u-boot`` capable of directly booting from NVMe as well as ``recovery``
 image to help with flashing the NVMe and potentially debugging system issues.
-As a second step a Debian `system` image will be installed to the NVMe.
+As a second step a Debian ``system`` image will be installed to the NVMe.
 
 Flashing NAND:
 --------------
@@ -42,8 +42,8 @@ from USB; To do this:
 * Format a USB stick with a single FAT or FAT32 partition
 * Download and put on the stick:
 
-  * openwrt-mediatek-filogic-openwrt_one-snand-preloader.bin
-  * openwrt-mediatek-filogic-openwrt_one-factory.ubi
+  * ``openwrt-mediatek-filogic-openwrt_one-snand-preloader.bin``
+  * ``openwrt-mediatek-filogic-openwrt_one-factory.ubi``
 
 Then to flash:
 
@@ -63,19 +63,19 @@ Now the NVMe can be flashed, also from USB.
 * Format a USB stick with a single FAT or FAT32 partition
 * Download:
 
-  * the system image (e.g. openwrt.img.zst)
-  * the associated bmap file (e.g. openwrt.img.bmap)
+  * the system image (e.g. ``openwrt-one-debian-<date>.img.zst``)
+  * the associated bmap file (e.g. ``openwrt-one-debian-<date>.img.bmap``)
 
 For flashing the recovery image should be booted from NAND:
 
 * Power on the device
-* On first boot `Bad EC magic` messages can be shown, this can be ignored
+* On first boot ``Bad EC magic`` messages can be shown, this can be ignored
 * If there was no OS on the NVMe, the system will automatically boot the
-  recovery image. Otherwise stop U-Boot and execute `run boot_recovery`
+  recovery image. Otherwise stop U-Boot and execute ``run boot_recovery``
 * On boot a small flasher UI will show up on serial console.
 * Simply select an image to flash (detected on USB drive)
 * Once flashing is done, hit enter to reboot into the Debian system!
-* On first boot systemd-firstboot will prompt for hostname, root shell,
+* On first boot ``systemd-firstboot`` will prompt for hostname, root shell,
   root password. Be aware the boot messages can somewhat hide it prompting to
   start.
 * Have fun!
@@ -88,14 +88,14 @@ Recovery image:
 
 The recovery image as part of the NAND image is simply a minimal Debian system
 running in memory. To access this system hit Ctrl-C when the flasher pops and
-it will boot through to a getty. Login with user `root`, password `root`. This
-can be used for analysing issues with the main installation. As it's a normal
+it will boot through to a getty. Login with user ``root``, password ``root``.
+This can be used for analysing issues with the main installation. As it's a normal
 Debian system, apt etc will work as expected. However as it's running from
 memory it's all ephemeral.
 
 Network wise *all* interfaces are configured to DHCP including wireless. For
-connect to wireless `iwd` is pre-installed. `wlan0` is the 2.4 Ghz interface,
-`wlan1` is 5Ghz. To connect to a wireless network::
+connect to wireless ``iwd`` is pre-installed. ``wlan0`` is the 2.4 Ghz interface,
+``wlan1`` is 5Ghz. To connect to a wireless network::
 
   # Get the available wireless networks
   iwctl station wlan1  get-networks
@@ -112,12 +112,12 @@ configuration.
 * Openssh server is installed. [#ssh]_
 * Hostapd with example setups for both wireless interfaces
 
-  * By default exposed as ssid `openwrt-debian` with PSK: `debian on openwrt one`
+  * By default exposed as ssid ``openwrt-debian`` with PSK: ``debian on openwrt one``
 
-* `systemd-networkd` for network configuration, by default:
+* ``systemd-networkd`` for network configuration, by default:
 
-  * `WAN` interface as DHCP
-  * `LAN` interfaced bridge with the wireless in `lanbr`. Also configured to DHCP
+  * ``WAN`` interface as DHCP
+  * ``LAN`` interfaced bridge with the wireless in ``lanbr``. Also configured to DHCP
 
 * default leds configured via an udev rule (leds.role)
 
@@ -133,7 +133,7 @@ configuration.
 Reverting to OpenWrt:
 =====================
 
-As the `NOR` flash isn't touched, to revert to OpenWrt simply use their `full
+As the ``NOR`` flash isn't touched, to revert to OpenWrt simply use their `full
 recovery instructions`_.
 
 .. _full recovery instructions: https://openwrt.org/toh/openwrt/one#boot_into_norfull_recovery_modeflash_nand_from_usb
