@@ -47,13 +47,19 @@ from USB; To do this:
 
 Then to flash:
 
+* Plug in the USB stick with the above mentioned files
 * Switch boot selector on the back from NAND to NOR
+* Press and hold the button on the front
 * Power on the device
 * Wait until the front leds turn on (all three)
-* Hold front key for a couple of seconds, until only the white LED is on
+* When only the white LED is on, you can release the button on the front
 * Wait for the flashing to finish, green LED will turn on
 * Remove power, switch boot selector back to NAND
 
+If this sounds similar to `Boot into NOR/full recovery mode`_ on the OpenWrt One
+'toh' page, that is not a coincidence.
+
+.. _Boot into NOR/full recovery mode: https://openwrt.org/toh/openwrt/one#boot_into_norfull_recovery_modeflash_nand_from_usb
 
 Flashing NVMe:
 --------------
@@ -68,6 +74,7 @@ Now the NVMe can be flashed, also from USB.
 
 For flashing the recovery image should be booted from NAND:
 
+* Plug in the USB stick with the above mentioned files
 * Power on the device
 * On first boot ``Bad EC magic`` messages can be shown, this can be ignored
 * If there was no OS on the NVMe, the system will automatically boot the
