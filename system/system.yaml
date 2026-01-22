@@ -47,6 +47,8 @@ actions:
       - openssh-server
       - iproute2
       - initramfs-tools
+      - pppoe
+      - pppoeconf
 
 {{ if eq $kernel "local" }}
   - action: overlay
