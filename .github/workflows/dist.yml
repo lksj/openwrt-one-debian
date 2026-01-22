@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           path: u-boot
-          repository: sjoerdsimons/u-boot
+          repository: lksj/u-boot
           ref: mtk/openwrt-one
       - run: |
           apt update;
