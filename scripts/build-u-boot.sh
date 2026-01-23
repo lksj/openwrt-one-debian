@@ -15,7 +15,7 @@ fi
 
 if [ ! -d ${UBOOT} ] ; then
   git clone --depth 1 -b mtk/openwrt-one \
-    https://github.com/sjoerdsimons/u-boot.git
+    https://github.com/lksj/u-boot.git
 fi
 
 echo "==== Build u-boot ===="
